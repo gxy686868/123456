@@ -1,0 +1,45 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8088/eureka/
+mybatis:
+  type-aliases-package: com.jk
+  mapper-locations: classpath:mybatis/mapper/*.xml
+spring:
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: bus-refresh
+  application:
+    name: cloud-feign
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    port: 5672
+  cloud:
+    config:
+      profile: dev
+      discovery:
+        service-id: cloud-config
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/2003a?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+  thymeleaf:
+    cache: false
+    mode: LEGACYTML5
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+
+
+

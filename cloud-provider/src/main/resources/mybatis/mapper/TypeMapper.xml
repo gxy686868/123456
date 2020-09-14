@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.cloudprovider.mapper.TypeMapper">
+    <!-- 查询总条数 -->
+    <select id="findresPageCount" resultType="int">
+        select count(*) from t_pyq
+	</select>
+
+    <!-- 分页查询试卷信息 -->
+    <select id="findresPage" parameterType="int" resultType="com.jk.entity.Type">
+         select * from t_pyq limit #{start},#{rows}
+    </select>
+
+    <!-- 批删 -->
+    <delete id="updatefile" parameterType="string">
+        delete from t_pyq  where pyqid in (${ids})
+    </delete>
+
+    <!-- 删除 -->
+    <delete id="del" parameterType="Integer">
+		delete from t_pyq where pyqid = #{id}
+	</delete>
+
+    <!-- 新增 -->
+    <insert id="addType" parameterType="com.jk.entity.Type">
+		insert into t_pyq(username,content,imagePath,dzsl,createdatetime)
+		     values(#{username},#{content},#{imagePath},#{dzsl},#{createdatetime})
+	</insert>
+
+    <!-- 回显 -->
+    <select id="findTypeById" parameterType="int" resultType="com.jk.entity.Type">
+		select * from t_pyq  where pyqid = #{id}
+	</select>
+
+    <!-- 修改 -->
+    <update id="updateType" parameterType="com.jk.entity.Type" >
+		update t_pyq set
+		        username=#{username},content=#{content},imagePath=#{imagePath},dzsl=#{dzsl},
+		        createdatetime=#{createdatetime} where pyqid=#{pyqid}
+	</update>
+</mapper>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <script src="../js/jquery.min.js"></script>
+    <!-- bootstrap -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 树 -->
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-treeview.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-treeview.min.css" />
+    <!-- 选项卡 -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.addtabs.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.addtabs.css" />
+    <!-- 表格 -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-table.min.css" />
+    <!-- 弹框 -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootbox.js"></script>
+    <!-- 时间 -->
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="../js/bootstrap/js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- 文件上传 -->
+    <script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-fileinput/css/fileinput.css">
+</head>
+<style>
+
+</style>
+<body>
+<!-- 导航条 -->
+<nav class="navbar navbar-inverse navbar-fixed-top" >
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">金科教育</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid " style="margin-top: 60px; ">
+    <div class="row">
+        <div class="col-md-2">
+            <!-- 树 -->
+            <div id="myTree"></div>
+        </div>
+
+        <!-- 选项卡 -->
+        <div class="col-md-9">
+            <div id="myTabs">
+                <!-- 新选项卡 -->
+                <ul class="nav nav-tabs" id="tablist">
+                    <li role="presentation" class="active"><a href="#home"
+                                                              role="tab" data-toggle="tab">欢迎</a></li>
+                </ul>
+
+                <!-- 选项卡下内容 -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        欢迎访问金科教育管理系统
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(function(){
+        initTree();
+    })
+
+
+    function initTree(){
+        $.ajax({
+            type:"get",
+            url:"/tree/queryAllTreeInfo",
+            dataType:"json",
+            success:function(data){
+                $('#myTree').treeview({
+                    data:data,
+                    //为当前节点添加点击事件  event事件对象 node节点对象
+                    onNodeSelected:function(event, node) {
+                        //iframeHeight 设置选项卡高度
+                        $.addtabs({iframeHeight: 550});
+                        $.addtabs.add({
+                            id:node.id,
+                            title:node.text,
+                            url:node.href
+                        });
+                    }
+                })
+            }
+        })
+    }
+
+</script>
+</html>
+

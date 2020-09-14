@@ -1,0 +1,16 @@
+server:
+  port: 8093
+mybatis:
+  type-aliases-package: com.example.cloudprovider
+  mapper-locations: classpath:mybatis/mapper/*.xml
+spring:
+  application:
+    name: cloud-provider
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/2003a?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+
+
+

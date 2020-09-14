@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery.min.js"></script>
+    <!-- bootstrap -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 树 -->
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-treeview.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-treeview.min.css" />
+    <!-- 选项卡 -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.addtabs.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.addtabs.css" />
+    <!-- 表格 -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-table.min.css" />
+    <!-- 弹框 -->
+    <script type="text/javascript" src="../js/bootstrap/js/bootbox.js"></script>
+    <!-- 时间 -->
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="../js/bootstrap/js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- 文件上传 -->
+    <script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-fileinput/css/fileinput.css">
+</head>
+<body>
+<form class="form-horizontal" id="userFrom">
+    <div class="form-group">
+        <input  style="display: none;" th:value="${id}" id="pyqid" name="pyqid">
+        <div class="col-sm-10">
+            <label for="username" class="col-sm-2 control-label">姓名</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="content" class="col-sm-2 control-label">描述</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="content" name="content" placeholder="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="dzsl" class="col-sm-2 control-label">奇数</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="dzsl" name="dzsl" placeholder="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="createdatetime" class="col-sm-2 control-label">创建时间 </label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="createdatetime" name="createdatetime" placeholder="">
+        </div>
+    </div>
+
+
+</form>
+</body>
+<script type="text/javascript">
+
+    $(function(){
+        findOrdrOne()
+    })
+    //回显
+    function findOrdrOne(){
+        var pyqid=$("#pyqid").val();
+        if(pyqid!="" && pyqid!=null){
+            $.ajax({
+                url:'/type/findTypeById',
+                data:{id:pyqid},
+                success:function(data){
+                    $("#username").val(data.username);
+                    $("#content").val(data.content);
+                    $("#dzsl").val(data.dzsl);
+                    var date=data.createdatetime.substr(0,10);
+                    $("#createdatetime").val(date);
+                }
+            })
+        }
+    }
+
+
+
+    function initDate(){
+        $(".date").datetimepicker({
+            language: 'zh-CN',//显示中文
+            format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+            minView: "month",//设置只显示到月份
+            initialDate: new Date(),//初始化当前日期 js是客户端时间 修改客户端电脑时间 可以改变js时间
+            autoclose: true,//选中自动关闭
+            todayBtn: true//显示今日按钮
+        });
+    }
+
+
+</script>
+</html>
